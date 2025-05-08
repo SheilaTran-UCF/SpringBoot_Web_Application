@@ -1,0 +1,193 @@
+<!--
+* Name: Minh-Ngoc Tran
+* Course: 202520-COP-3330C
+* Project 8 - Web Apps
+* Date: April 10 - 2025
+* Part_ 02
+
+This HTML file generates a page that displays results after a user submits data, styled with CSS. The page includes the following key elements:
+- Heading: Displays your name, course, and project title.
+- Thank You Message: A message thanking the user for submitting their data.
+- Information Table: Displays the user's Student ID, Date, and Message based on the data provided.
+- Previous Submissions: If any submissions exist, they are displayed in a list, showing the Student ID, Date, and Message for each entry.
+- Link to Submit Another Message: A red-colored link that allows the user to submit another message.
+The layout is responsive, with a clean design using CSS for visual styling, including colors, spacing, and borders.
+It uses Thymeleaf (th:text) for dynamic content insertion (e.g., values for student ID, date, and message).
+-->
+
+
+<!DOCTYPE html> <!-- Declares the document type as HTML5 -->
+<html xmlns:th="http://www.thymeleaf.org"> <!-- Root HTML element with Thymeleaf namespace -->
+
+
+<head>
+    <meta charset="UTF-8"> <!-- Sets the character encoding to UTF-8 -->
+    <title>Results</title> <!-- Sets the title of the browser tab -->
+
+    <style>
+        /* CSS styles for the page */
+
+        body {
+            background-color: #f2f2f2; /* Light gray background */
+            font-family: Arial, sans-serif; /* Use Arial font */
+        }
+
+        .heading-yellow {
+            color: #B8860B; /* Golden color */
+            text-align: center;
+            font-size: 26pt;
+            margin-bottom: 20px;
+        }
+
+        .brown-text {
+            color: lightcoral; /* Light coral color for some text */
+            font-style: italic; /* Italicized text */
+            font-weight: bold; /* Bold text */
+            text-align: center; /* Center align text */
+            font-style: italic;
+            margin-bottom: 40px; /* Adds margin at the bottom */
+            font-size: 14pt;
+        }
+
+        .blue-text {
+            color: #007BFF; /* Standard blue */
+            ont-style: italic; /* Italicized text */
+            font-weight: bold; /* Bold text */
+            margin-bottom: 30px; /* Adds margin at the bottom */
+        }
+
+        .order-text {
+            color: lightcoral;/* Light coral color for some text */
+            font-style: italic; /* Italicized text */
+            font-weight: bold; /* Bold text */
+            font-size: 14pt;  /* Adjusts the font size to 14pt (a print-based unit for text size)*/
+            margin-top: 50px; /* Adds space above the element, pushing it down by 50px.*/
+            margin-bottom: 30px; /* Adds space below the element, separate it from content by 30px.*/
+
+        }
+
+        .container {
+            max-width: 700px; /* Container width limit */
+            margin: 40px auto; /* Centers the container */
+            background: white; /* White background for the form */
+            padding: 30px; /* Padding inside the container */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        .data {
+            font-size: 18px; /* Sets the font size of elements with the class 'data' to 18px */
+            margin-bottom: 10px; /* Adds a 10px space below elements with the class 'data' */
+        }
+
+        .submissions-list {
+            margin-top: 30px; /* Adds 30px of space above elements with the class 'submissions-list' */
+        }
+
+        .submissions-list ul {
+            list-style-type: none; /* Removes the default bullet points from the unordered list */
+            padding-left: 0; /* Removes left padding from the unordered list */
+        }
+
+        .submissions-list li {
+            background-color: #f9f9f9; /* Sets a light gray background color for each list item */
+            margin-bottom: 10px; /* Adds 10px of space below each list item */
+            padding: 10px; /* Adds 10px of padding inside each list item */
+            border-left: 4px solid #B8860B; /* Adds a golden-colored (B8860B) left border of 4px width */
+        }
+
+        .blue-link {
+            color: blue; /* Sets the text color of elements with the class 'blue-link' to blue */
+            text-decoration: underline; /* Underlines the text */
+            display: block; /* Makes the element display as a block (takes full width) */
+            margin-top: 30px; /* Adds 30px of space above elements with the class 'blue-link' */
+            text-align: center; /* Centers the text inside the 'blue-link' element */
+            font-weight: bold; /* Makes the text bold */
+        }
+
+        .info-table {
+            width: 80%; /* Sets the table width to 80% of its container */
+            margin: 0 auto; /* Centers the table horizontally */
+            border-collapse: collapse; /* Collapses the borders into one, removing space between table borders */
+            font-size: 16px; /* Sets the font size of the table content to 16px */
+        }
+
+        .info-table th,
+        .info-table td {
+            border: 1px solid #ccc; /* Adds a 1px solid light gray border around table headers and cells */
+            padding: 10px; /* Adds 10px of padding inside table headers and cells */
+            text-align: left; /* Aligns the text to the left in table headers and cells */
+            vertical-align: top; /* Aligns the content to the top in table cells */
+        }
+
+        .message-box {
+            border: 2px solid #007BFF; /* Adds a 2px solid blue border around the message box */
+            background-color: #f0f8ff; /* Sets the background color of the message box to a light blue */
+            border-radius: 8px; /* Rounds the corners of the message box with a radius of 8px */
+            padding: 10px; /* Adds 10px of padding inside the message box */
+            white-space: pre-wrap; /* Preserves line breaks in the text inside the message box */
+        }
+
+        .entry-part {
+            margin-right: 15px; /* Adds 15px of space to the right of elements with the class 'entry-part' */
+        }
+
+    </style>
+</head>
+
+<body> <!-- Main content body starts -->
+
+<div class="container"> <!-- Page content container with styling -->
+
+    <!-- Heading with your name, course, and project -->
+    <h1 class="heading-yellow">Minh-Ngoc Tran - COP 3330C - JAVA - Project 8: Result</h1>
+
+    <!-- Thank-you message -->
+    <p class="brown-text">Thank you for submitting your data - Here is the data you entered.</p>
+
+    <!-- Table displaying the submitted user info -->
+    <table class="info-table">
+        <tr>
+            <th class="blue-text">Student ID</th> <!-- Column title -->
+            <td th:text="${greeting.studentId}"></td> <!-- Inserts studentId using Thymeleaf -->
+        </tr>
+        <tr>
+            <th class="blue-text">Date</th>
+            <td th:text="${greeting.formattedDate}"></td> <!-- Inserts formattedDate -->
+        </tr>
+        <tr>
+            <th class="blue-text">Message</th>
+            <td class="message-box" th:text="${greeting.message}"></td> <!-- Inserts message in styled box -->
+        </tr>
+    </table>
+
+    <!-- Section for previous submissions, shown only if list exists -->
+    <div class="submissions-list" th:if="${submissions != null}">
+        <p class="order-text">** Previous Submissions **</p>
+
+        <ul style="padding-right: 10px;"> <!-- List of previous submissions -->
+            <!-- Loops through each entry in the submissions list -->
+            <li th:each="entry : ${submissions}">
+                <span class="entry-part">
+                    <strong class="blue-text">ID:</strong>
+                    <span th:text="${entry.studentId}"></span> |
+                </span>
+                <span class="entry-part">
+                    <strong class="blue-text">Date:</strong>
+                    <span th:text="${entry.month} + '/' + ${entry.day} + '/' + ${entry.year}"></span> |
+                </span>
+                <span class="entry-part">
+                    <strong class="blue-text">Message:</strong>
+                    <span th:text="${entry.message}"></span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Link to go back to the form -->
+    <a href="/greeting" class="blue-link">Submit another message</a>
+
+</div> <!-- End of container -->
+
+</body>
+</html> <!-- End of HTML -->

@@ -1,0 +1,136 @@
+<!--
+* Name: Minh-Ngoc Tran
+* Course: 202520-COP-3330C
+* Project 8 - Web Apps
+* Date: April 10 - 2025
+* Part_ 02
+
+This HTML file generates a greeting form where users can input their Student ID, Message, and Date (including Month, Day, and Year) using a simple form.
+It uses Thymeleaf for dynamic data binding. The form includes:
+- Input Fields: For Student ID, Message, Month, Day, and Year with validation.
+- Buttons: Submit to send data and Reset to clear the form.
+- Error Handling: Displays an error message in red if there is any issue with the form submission.
+The layout is styled with CSS for a clean, centered design.
+-->
+
+<!DOCTYPE html> <!-- Declares the document type as HTML5 -->
+<html xmlns:th="http://www.thymeleaf.org"> <!-- Root HTML element with Thymeleaf namespace -->
+
+
+<head>
+  <meta charset="UTF-8"> <!-- Specifies the character encoding as UTF-8 -->
+  <title>Greeting Form</title> <!-- Sets the title for the webpage, which appears on the browser tab -->
+
+  <style>
+    /* CSS styles for the page */
+
+    body {
+      background-color: #f2f2f2; /* Light gray background */
+      font-family: Arial, sans-serif; /* Use Arial font */
+    }
+
+    .heading-yellow {
+      color: #B8860B; /* Golden yellow color for the heading */
+    }
+
+    .brown-text {
+      color: lightcoral; /* Light coral color for some text */
+      font-style: italic; /* Italicized text */
+      font-weight: bold; /* Bold text */
+      text-align: center; /* Center align text */
+      margin-bottom: 40px; /* Adds margin at the bottom */
+    }
+
+    .blue-text {
+      color: blue; /* Blue color for some text */
+      font-style: italic; /* Italicized text */
+      font-weight: bold; /* Bold text */
+      margin-bottom: 30px; /* Adds margin at the bottom */
+    }
+
+    .container {
+      max-width: 600px; /* Container width limit */
+      margin: 40px auto; /* Center align the container with top/bottom margins */
+      background: white; /* White background for the form */
+      padding: 30px; /* Padding inside the container */
+      border-radius: 10px; /* Rounded corners */
+      box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Adds a subtle shadow */
+    }
+
+    h1 {
+      font-size: 32pt; /* Font size for the heading */
+      text-align: center; /* Center align the heading */
+    }
+
+    p {
+      font-weight: bold; /* Bold text */
+      font-style: italic; /* Italicized text */
+    }
+
+    input[type="text"], input[type="number"] {
+      width: 100%; /* Makes input fields take up the full width */
+      padding: 10px; /* Padding inside the input fields */
+      margin: 6px 0 12px; /* Margin above and below the fields */
+      border: 1px solid #ccc; /* Light gray border */
+      border-radius: 6px; /* Rounded corners for the input fields */
+    }
+
+    input[type="submit"], input[type="reset"] {
+      padding: 10px 20px; /* Padding for submit and reset buttons */
+      margin-right: 10px; /* Margin to the right for spacing */
+      background-color: #3498db; /* Blue background for buttons */
+      color: white; /* White text color */
+      border: none; /* No border for the buttons */
+      border-radius: 6px; /* Rounded corners */
+      cursor: pointer; /* Pointer cursor on hover */
+    }
+
+    input[type="submit"]:hover, input[type="reset"]:hover {
+      background-color: #2980b9; /* Darker blue on hover */
+    }
+  </style>
+</head>
+
+<body> <!-- Start of the body content -->
+
+<div class="container"> <!-- Main content container with styling -->
+
+  <h1 class="heading-yellow">Minh-Ngoc Tran - COP 3330C - JAVA - Project 8: Greeting</h1>
+  <!-- Heading with your name, course, and project title -->
+
+  <p class="brown-text">Please enter your student ID, a date, and a message below.</p>
+  <!-- Instructional message displayed in brown text -->
+
+  <!-- Form for user input with Thymeleaf integration -->
+  <form action="#" th:action="@{/greeting}" th:object="${greeting}" method="post">
+    <!-- 'action' directs the form submission and 'th:object' binds the form to the greeting object -->
+
+    <p><strong class="blue-text">Student ID: <input type="text" th:field="*{studentId}" required /></p>
+    <!-- Input field for Student ID, binding to the 'studentId' property of the 'greeting' object -->
+
+    <p><strong class="blue-text">Message: <input type="text" th:field="*{message}" required /></p>
+    <!-- Input field for Message, binding to the 'message' property -->
+
+    <p><strong class="blue-text">Month: <input type="number" th:field="*{month}" min="1" max="12" required /></p>
+    <!-- Input field for Month, binding to the 'month' property, with valid range 1-12 -->
+
+    <p><strong class="blue-text">Day: <input type="number" th:field="*{day}" min="1" max="31" required /></p>
+    <!-- Input field for Day, binding to the 'day' property, with valid range 1-31 -->
+
+    <p><strong class="blue-text">Year: <input type="number" th:field="*{year}" min="1900" max="2100" required /></p>
+    <!-- Input field for Year, binding to the 'year' property, with valid range 1900-2100 -->
+
+    <p><input type="submit" value="Enter Data" />
+      <input type="reset" value="Clear" /></p>
+    <!-- Submit button to send the form data, and reset button to clear all fields -->
+
+  </form>
+
+  <!-- Error message displayed if there is an error -->
+  <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+  <!-- Only displays if the 'error' attribute is set in the model, shown in red color -->
+
+</div> <!-- End of container -->
+
+</body> <!-- End of the body -->
+</html> <!-- End of the HTML document -->

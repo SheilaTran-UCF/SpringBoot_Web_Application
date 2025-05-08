@@ -1,0 +1,25 @@
+
+<!--
+* Name: Minh-Ngoc Tran
+* Course: 202520-COP-3330C
+* Project 8 - Web Apps
+* Date: April 10 - 2025
+Part_ 02
+
+This file Displays an error message using Thymeleaf templating in a Spring Boot application.
+-->
+
+<!DOCTYPE html> <!-- Declares HTML5 -->
+<html xmlns:th="http://www.thymeleaf.org"> <!-- Enables Thymeleaf syntax -->
+<head> <!-- Starts head section -->
+.
+    <meta charset="UTF-8"> <!-- Starts the <head> section, which contains meta-information about the document.-->
+    <title>Error</title> <!-- Sets title -->
+</head>
+<body>
+<h2 style="color: red;"> An error occurred:</h2>  <!--  Displays a red-colored error title.-->
+<p th:text="${error}"></p> <!-- Injects and displays the error message from the model.-->
+<a href="/greeting">Back to form</a> <!--  Provides a link to navigate back to the form.-->
+</body>
+</html>
+
